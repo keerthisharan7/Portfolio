@@ -1,0 +1,117 @@
+/* Reset and base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #0a0a0a; /* Velvet black */
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  /* Headings and Paragraphs */
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin: 8px 0;
+  }
+  
+  /* Typing animation section */
+  .typed-container {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #cccccc;
+  }
+  
+  .cursor {
+    display: inline-block;
+    margin-left: 2px;
+    color: #00bfff;
+    font-weight: bold;
+    font-size: 1.2em;
+    animation: blink 0.5s infinite; /* faster blink */
+  }  
+  
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  }
+  
+  /* Profile Photo with tilt and shine */
+  .photo-placeholder {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    border-radius: 8px;
+    border: 2px solid #333;
+    background-image: url('keerthisharan.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    position: relative;
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+  }
+  
+  .photo-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  
+  .photo-placeholder.shining::before {
+    opacity: var(--shine-opacity, 0);
+    background: radial-gradient(
+      circle at var(--shine-x, 50%) var(--shine-y, 50%),
+      rgba(255, 255, 255, 0.25),
+      transparent 60%
+    );
+  }
+  
+  /* Details card */
+  .details {
+    margin-top: 20px;
+    text-align: left;
+    color: #dddddd;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Clickable experience text */
+  .clickable {
+    color: #00bfff;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
