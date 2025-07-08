@@ -91,8 +91,8 @@ photo.addEventListener('mousemove', (e) => {
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
 
-  const rotateX = -(y - centerY) / 10;
-  const rotateY = (x - centerX) / 10;
+  const rotateX = -(y - centerY) / 5;
+  const rotateY = (x - centerX) / 5;
 
   photo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   photo.style.setProperty('--shine-x', `${x}px`);
@@ -124,7 +124,7 @@ function typeLoop() {
       charIndex++;
     } else {
       typing = false;
-      setTimeout(typeLoop, 1000); // Pause before deleting
+      setTimeout(typeLoop, 800); // Pause before deleting
       return;
     }
   } else {
@@ -137,7 +137,17 @@ function typeLoop() {
     }
   }
 
-  setTimeout(typeLoop, typing ? 100 : 50); // Typing vs deleting speed
+  setTimeout(typeLoop, typing ? 60 : 30); // Typing vs deleting speed
 }
 
-typeLoop();
+typeLoop(); 
+
+// const dot = document.getElementById("glow-dot");
+// const reveal = document.getElementById("reveal-text");
+
+// dot.addEventListener("click", () => {
+//   dot.style.display = "none";
+//   reveal.classList.remove("hidden");
+// });
+
+
