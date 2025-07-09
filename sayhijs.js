@@ -12,7 +12,7 @@ const nameInput = document.querySelector('.contact-form input[type="text"]');
 nameInput.addEventListener('input', () => {
   const nameValue = nameInput.value.trim();
 
-  const isValid = /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(nameValue) && nameValue.length >= 3;
+  const isValid = /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(nameValue) && nameValue.length >= 1;
 
   // Remove red if valid
   if (isValid || nameValue === "") {
