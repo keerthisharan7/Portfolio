@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Website</title>
+  <meta name="description" content="Semantic, responsive site converted from design." />
+  <style>
+/* ---------- Base & Tokens ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --surface: #f8fafc;
+  --border: #e2e8f0;
+  --shadow: 0 10px 30px rgba(2,6,23,.06);
+  --primary: #111827;
+  --accent: #2563eb;
+  --radius: 18px;
+  --container: 1200px;
+  --space: clamp(.75rem, 1.2vw, 1rem);
+}
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+html { scroll-behavior: smooth; }
+body{
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font: 400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+img{ max-width: 100%; height: auto; display: block; }
+a{ color: inherit; text-decoration: none; }
+p{ margin: 0 0 1rem; }
+h1,h2,h3{ margin: 0 0 .5rem; line-height: 1.2; }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.muted{ color: var(--muted); }
+.display{ font-size: clamp(2rem, 3.2vw + 1rem, 3.5rem); font-weight: 800; }
+.lead{ font-size: clamp(1rem, .5vw + 1rem, 1.125rem); color: var(--muted); }
+
+/* Containers */
+.container{ max-width: var(--container); margin-inline: auto; padding-inline: 1rem; }
+
+/* Utilities */
+.grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: clamp(1rem, 3vw, 2rem); }
+.card{
+  background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow);
+}
+.checklist{ padding-left: 0; margin: 0; display: grid; gap: .4rem; list-style: none; }
+.checklist li{ position: relative; padding-left: 1.5rem; }
+.checklist li::before{ content: "✓"; position: absolute; left: 0; top: 0; line-height: 1.2; font-weight: 700; color: var(--accent); }
+.logo-row{ display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1rem; align-items: center; }
+.logo-row img{ width: 100%; max-height: 52px; object-fit: contain; filter: saturate(.9) contrast(1.05); opacity: .9; }
+.alt{ background: var(--surface); }
+
+/* Promo bar (optional) */
+.promo{
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: .5rem 1rem;
+  font-weight: 500;
+}
+
+/* Header */
+.site-header{
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in oklab, var(--bg), transparent 0%);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+.header-inner{ display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 70px; gap: 1rem; }
+.brand{ font-weight: 800; letter-spacing: 0.3px; font-size: 1.125rem; }
+.nav{ justify-self: center; }
+.nav ul{ list-style: none; display: flex; gap: .25rem; padding: 0; margin: 0; }
+.nav a{ padding: .6rem .75rem; border-radius: 10px; }
+.nav a:hover{ background: var(--surface); }
+.btn{
+  display:inline-block; background: var(--accent); color: #fff; padding:.85rem 1.1rem; border-radius: 12px; font-weight: 600; border: 0; box-shadow: var(--shadow);
+}
+.btn--ghost{ background: transparent; color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+.btn--block{ width: 100%; }
+.btn--sm{ padding: .55rem .8rem; font-size: .95rem; }
+
+/* Actions (optional header icons) */
+.actions{ justify-self: end; display: flex; align-items: center; gap: .25rem; }
+.icon-btn{
+  display: inline-grid; place-items: center; width: 38px; height: 38px;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--bg);
+}
+.icon-btn:where(:hover,:focus-visible){ outline: none; box-shadow: var(--shadow); }
+
+/* Mobile nav */
+.nav-toggle{ display: none; background: none; border: 0; padding: .5rem; margin-left: .25rem; }
+.nav-toggle .bar{ display: block; width: 22px; height: 2px; background: currentColor; margin: 4px 0; border-radius: 1px; }
+
+/* Hero */
+.hero{ padding: clamp(2.5rem, 6vw, 5rem) 0; }
+.hero-inner{ display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1rem, 3.5vw, 2rem); align-items: center; }
+.eyebrow{ display:inline-block; font-weight: 600; letter-spacing: .2px; color: var(--accent); margin-bottom: .5rem; }
+.hero-actions{ display:flex; gap: .75rem; margin-top: 1rem; }
+.hero-media{ overflow: hidden; border-radius: 20px; box-shadow: var(--shadow); }
+
+/* Feature grid */
+.feature-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1rem;
+}
+
+/* CTA */
+.section{ padding: clamp(2.5rem, 6vw, 4rem) 0; }
+.section-head{ display:flex; flex-wrap: wrap; gap:.5rem 1rem; align-items:flex-end; justify-content:space-between; margin-bottom: 1rem; }
+.section-head .link{ color: var(--accent); font-weight: 600; }
+.inline-form{ display:inline-flex; gap:.5rem; margin: 1rem 0; }
+.inline-form input{
+  min-width: min(360px, 70vw); padding: .85rem .9rem; border-radius: 12px; border:1px solid var(--border);
+}
+
+/* Footer */
+.site-footer{ border-top: 1px solid var(--border); background: var(--bg); }
+.footer-grid{ display:grid; grid-template-columns: 1fr auto auto; gap: 1rem; padding: 2rem 0; align-items:start; }
+.footer-grid ul{ list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.social a{ display:inline-flex; width:36px; height:36px; border:1px solid var(--border); border-radius: 999px; align-items:center; justify-content:center; }
+
+/* Cart Drawer (optional) */
+.cart-drawer{ position: fixed; inset: 0; pointer-events: none; }
+.cart-backdrop{
+  position: absolute; inset: 0; background: rgba(2,6,23,.4); opacity: 0; transition: opacity .2s ease;
+}
+.cart-panel{
+  position: absolute; top: 0; right: 0; width: min(420px, 100%); height: 100%; background:#fff; border-left:1px solid var(--border);
+  transform: translateX(100%); transition: transform .25s ease; display:flex; flex-direction: column;
+}
+.cart-head{ display:flex; align-items:center; justify-content:space-between; padding: 1rem; border-bottom:1px solid var(--border); }
+.cart-items{ flex: 1; padding: 1rem; overflow:auto; display: grid; gap: .75rem; }
+.cart-foot{ border-top:1px solid var(--border); padding: 1rem; display:grid; gap:.75rem; }
+.totals{ display:flex; align-items:center; justify-content:space-between; font-weight: 600; }
+.cart-open .cart-drawer{ pointer-events: auto; }
+.cart-open .cart-backdrop{ opacity: 1; }
+.cart-open .cart-panel{ transform: translateX(0); }
+
+/* --------- RESPONSIVE --------- */
+@media (max-width: 1100px){
+  .header-inner{ grid-template-columns: auto 1fr auto; }
+  .hero-inner{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 980px){
+  .nav-toggle{ display:block; }
+  .nav{ position: absolute; inset: 70px 0 auto 0; border-bottom: 1px solid var(--border); background: var(--bg); transform: translateY(-120%); transition: transform .25s ease; }
+  .nav ul{ flex-direction: column; padding: .75rem; }
+  .nav.open{ transform: translateY(0); }
+  .feature-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .grid-2{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px){
+  .inline-form{ display: grid; }
+  .footer-grid{ grid-template-columns: 1fr; }
+  .feature-grid{ grid-template-columns: 1fr; }
+  .logo-row{ grid-template-columns: repeat(auto-fit, minmax(90px,1fr)); }
+}
+  </style>
+</head>
+<body>
+  <header class="site-header" data-sticky>
+    <div class="container header-inner">
+      <a class="brand" href="#">Brand</a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+
+      <nav id="primary-nav" class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#section-a">Section A</a></li>
+          <li><a href="#section-b">Section B</a></li>
+          <li><a href="#section-c">Section C</a></li>
+          <li><a href="#cta" class="btn btn--sm">Get Started</a></li>
+        </ul>
+      </nav>
+
+      <!-- Optional header actions (hidden on small screens by default)
+      <div class="actions">
+        <button class="icon-btn" data-cart-open aria-label="Open cart">🛒</button>
+      </div> -->
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">New</span>
+          <h1 class="display">Hero Headline</h1>
+          <p class="lead">Short value proposition matching the design.</p>
+          <div class="hero-actions">
+            <a href="#cta" class="btn">Primary Action</a>
+            <a href="#section-a" class="btn btn--ghost">Secondary</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="assets/hero-placeholder.jpg" alt="Illustration showing the product" />
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE GRID -->
+    <section id="section-a" class="section">
+      <div class="container">
+        <header class="section-head">
+          <div>
+            <h2>Section A Title</h2>
+            <p class="muted">Support text as per design.</p>
+          </div>
+          <a class="link" href="#">Explore all</a>
+        </header>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Feature One</h3>
+            <p>Short description.</p>
+          </article>
+          <article class="card">
+            <h3>Feature Two</h3>
+            <p>Short description.</p>
+          </article>
+          <article class="card">
+            <h3>Feature Three</h3>
+            <p>Short description.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMAGE/CONTENT SPLIT -->
+    <section id="section-b" class="section alt">
+      <div class="container grid-2">
+        <div>
+          <img src="assets/content-placeholder.jpg" alt="Content image" />
+        </div>
+        <div>
+          <h2>Section B Title</h2>
+          <p>Body copy pulled from the design.</p>
+          <ul class="checklist">
+            <li>Key point</li>
+            <li>Another point</li>
+            <li>One more</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY/LOGOS -->
+    <section id="section-c" class="section">
+      <div class="container">
+        <h2>Section C Title</h2>
+        <div class="logo-row">
+          <img src="assets/logo-1.svg" alt="Logo 1" />
+          <img src="assets/logo-2.svg" alt="Logo 2" />
+          <img src="assets/logo-3.svg" alt="Logo 3" />
+          <img src="assets/logo-4.svg" alt="Logo 4" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="section cta">
+      <div class="container">
+        <h2>Call to Action</h2>
+        <p class="lead">CTA blurb that matches the design.</p>
+        <form class="inline-form" action="#" method="post" novalidate>
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Enter your email" />
+          <button class="btn" type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="#">Brand</a>
+        <p class="muted">© <span id="year"></span> Brand. All rights reserved.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </nav>
+      <div class="social">
+        <a href="#" aria-label="Twitter"></a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="GitHub">GH</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- (Optional) Cart drawer markup: add to use cart JS -->
+  <div class="cart-drawer" aria-hidden="true">
+    <div class="cart-backdrop" data-cart-close></div>
+    <aside class="cart-panel" role="dialog" aria-label="Shopping Cart">
+      <div class="cart-head">
+        <strong>Cart</strong>
+        <button class="icon-btn" data-cart-close aria-label="Close">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-foot">
+        <div class="totals">
+          <span>Subtotal</span>
+          <span data-subtotal>₹0</span>
+        </div>
+        <button class="btn btn--block">Checkout</button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+/* Sticky header shadow */
+const header = document.querySelector('.site-header');
+const onScroll = () => {
+  if (window.scrollY > 6) header.style.boxShadow = 'var(--shadow)';
+  else header.style.boxShadow = 'none';
+};
+addEventListener('scroll', onScroll, { passive: true });
+
+/* Mobile nav */
+const toggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('#primary-nav');
+if (toggle && nav) {
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+}
+
+/* Smooth scroll for in-page links (keeps hash behavior) */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (!el) return;
+  e.preventDefault();
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  history.pushState(null, '', '#' + id);
+});
+
+/* Current year in footer */
+const y = document.getElementById('year');
+if (y) y.textContent = new Date().getFullYear();
+
+/* Cart drawer (optional) */
+const root = document.documentElement;
+const openCartBtns = document.querySelectorAll('[data-cart-open]');
+const closeCartBtns = document.querySelectorAll('[data-cart-close]');
+const cartItemsEl = document.querySelector('[data-cart-items]');
+const subtotalEl = document.querySelector('[data-subtotal]');
+const cartCountEl = document.querySelector('.cart-count');
+
+let cart = []; // { sku, title, price }
+
+function formatINR(n){
+  return new Intl.NumberFormat('en-IN', { style:'currency', currency:'INR', maximumFractionDigits:0 }).format(n);
+}
+function renderCart(){
+  if (!cartItemsEl) return;
+  if (cart.length === 0){
+    cartItemsEl.innerHTML = '<p class="muted">Your cart is empty.</p>';
+  } else {
+    cartItemsEl.innerHTML = cart.map(item => `
+      <div class="cart-line" style="display:flex; gap:.6rem; align-items:center; justify-content:space-between; border:1px solid var(--border); border-radius:12px; padding:.6rem .75rem;">
+        <div style="display:grid;">
+          <strong>${item.title}</strong>
+          <small class="muted">${item.sku}</small>
+        </div>
+        <div style="display:flex; align-items:center; gap:.5rem;">
+          <span>${formatINR(item.price)}</span>
+          <button aria-label="Remove" data-remove="${item.sku}" class="icon-btn">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  const subtotal = cart.reduce((s,i) => s + i.price, 0);
+  if (subtotalEl) subtotalEl.textContent = formatINR(subtotal);
+  if (cartCountEl) cartCountEl.textContent = cart.length;
+}
+function openCart(){ root.classList.add('cart-open'); }
+function closeCart(){ root.classList.remove('cart-open'); }
+
+openCartBtns?.forEach(b => b.addEventListener('click', openCart));
+closeCartBtns?.forEach(b => b.addEventListener('click', closeCart));
+document.addEventListener('click', (e) => {
+  const t = e.target;
+  if (t.matches?.('[data-remove]')){
+    const sku = t.getAttribute('data-remove');
+    cart = cart.filter(i => i.sku !== sku);
+    renderCart();
+  }
+});
+
+/* Quick add example (if product cards exist) */
+document.querySelectorAll('[data-add]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.product-card');
+    const title = card.querySelector('.title')?.textContent?.trim() || 'Product';
+    const sku = card.getAttribute('data-sku') || 'SKU';
+    const priceText = card.querySelector('.price')?.textContent?.replace(/[^\d]/g,'') || '0';
+    const price = Number(priceText);
+    cart.push({ sku, title, price });
+    renderCart();
+    openCart();
+  });
+});
+
+/* Initialize */
+renderCart();
+  </script>
+</body>
+</html>
