@@ -28,31 +28,11 @@ function calculateExperience() {
   const years = Math.floor(totalMonths / 12);
   const months = totalMonths % 12;
 
-  return {
-    years,
-    months,
-    days,
-    weeks,
-    hours,
-    minutes,
-    seconds,
-    totalMonths,
-    remainingDays
-  };
+  return { years, months, days, weeks, hours, minutes, seconds, totalMonths, remainingDays };
 }
 
 function updateDisplay() {
-  const {
-    years,
-    months,
-    days,
-    weeks,
-    hours,
-    minutes,
-    seconds,
-    totalMonths,
-    remainingDays
-  } = calculateExperience();
+  const { years, months, days, weeks, hours, minutes, seconds, totalMonths, remainingDays } = calculateExperience();
 
   staticElement.textContent = `${years} years ${months} months ${remainingDays} days`;
 
@@ -78,7 +58,6 @@ setInterval(() => {
 }, 1000);
 
 updateDisplay();
-
 
 // --- Profile Tilt and Shine Logic ---
 const photo = document.querySelector('.photo-placeholder');
@@ -106,7 +85,6 @@ photo.addEventListener('mouseleave', () => {
   photo.classList.remove('shining');
 });
 
-
 // --- Typing Animation ---
 const typedText = document.getElementById("typed-text");
 
@@ -124,7 +102,7 @@ function typeLoop() {
       charIndex++;
     } else {
       typing = false;
-      setTimeout(typeLoop, 800); // Pause before deleting
+      setTimeout(typeLoop, 800);
       return;
     }
   } else {
@@ -137,17 +115,21 @@ function typeLoop() {
     }
   }
 
-  setTimeout(typeLoop, typing ? 60 : 30); // Typing vs deleting speed
+  setTimeout(typeLoop, typing ? 60 : 30);
 }
 
-typeLoop(); 
+typeLoop();
 
-// const dot = document.getElementById("glow-dot");
-// const reveal = document.getElementById("reveal-text");
+// --- Scroll Reveal for Explore Section ---
+const exploreSection = document.querySelector('.explore-section');
 
-// dot.addEventListener("click", () => {
-//   dot.style.display = "none";
-//   reveal.classList.remove("hidden");
-// });
+function revealOnScroll() {
+  const rect = exploreSection.getBoundingClientRect();
+  if (rect.top < window.innerHeight - 100) {
+    exploreSection.classList.add('visible');
+    window.removeEventListener('scroll', revealOnScroll);
+  }
+}
 
-
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
